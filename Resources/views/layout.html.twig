@@ -1,0 +1,21 @@
+{% extends "NvsRavenLayoutBundle::base.html.twig" %}
+
+{% block body %}
+    <div class="container fluid"><div>
+    {% block main_navigation %}{{ render(controller('SwpFrameworkBundle:Navigation:index')) }}{% endblock %}
+    {% if app and app.session and app.session.flashbag %}
+
+    <div class="container" role="main">
+        {% for type in ['success', 'info', 'warning', 'danger'] %}
+        {% for flashMessage in app.session.flashbag.get(type) %}
+            <div class="alert alert-{{ type }} alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+    </div></div>
+{% endblock body %}

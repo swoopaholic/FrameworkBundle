@@ -1,0 +1,19 @@
+parameters:
+  nvs_raven.navigation.container_aware_provider.class: Swoopaholic\Bundle\FrameworkBundle\Navigation\Provider\ContainerAwareProvider
+  nvs_raven.navigation.navigation_factory.class: Swoopaholic\Component\Navigation\NavigationFactory
+  nvs_raven.navigation.navigation_registry.class: Swoopaholic\Component\Navigation\NavigationRegistry
+
+services:
+  nvs_raven.navigation.container_aware_provider:
+      class: %nvs_raven.navigation.container_aware_provider.class%
+      public: false
+      arguments: [@service_container, []]
+
+  nvs_raven.navigation.navigation_factory:
+      class: %nvs_raven.navigation.navigation_factory.class%
+      public: false
+      arguments: [@nvs_raven.navigation.navigation_registry]
+
+  nvs_raven.navigation.navigation_registry:
+      class: %nvs_raven.navigation.navigation_registry.class%
+      public: false

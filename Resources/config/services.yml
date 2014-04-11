@@ -1,0 +1,37 @@
+parameters:
+  nvs_framework.tables.max_per_page: 5
+
+services:
+  nvs_framework.menu.builder:
+      class: Swoopaholic\Bundle\FrameworkBundle\Menu\Builder
+      arguments:
+        - "@nvs_raven.navigation.container_aware_provider"
+        - []
+
+  nvs_framework.menu.main_nav:
+      class: Knp\Menu\MenuItem
+      factory_service: nvs_framework.menu.builder
+      factory_method: mainNavigation
+      arguments: ["@request", "@security.context"]
+      scope: request
+      tags:
+        - { name: nvs_framework.navigation.element, alias: menu_main_nav}
+
+  nvs_framework.navigation.builder:
+      class: Swoopaholic\Bundle\FrameworkBundle\Navigation\Builder
+      arguments: [@nvs_raven.navigation.container_aware_provider, @nvs_raven.navigation.navigation_factory]
+
+  nvs_framework.table.factory:
+      class: Swoopaholic\Component\Table\TableFactory
+
+  nvs_framework.crud_table.factory:
+      class: Swoopaholic\Bundle\FrameworkBundle\CrudTable\Factory
+      arguments: [@nvs_framework.table.factory, @router]
+      scope: request
+      calls:
+          - [setSortResolver, ["@nvs_framework.crud_table.sort_resolver"]]
+
+  nvs_framework.crud_table.sort_resolver:
+        class: Swoopaholic\Bundle\FrameworkBundle\CrudTable\SortResolver
+        arguments: [@request]
+        scope: request
