@@ -9,6 +9,12 @@
             "email": "danny.dorfel@gmail.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://nvs-satis.nvsotap.nl"
+        }
+    ],
     "require": {
         "php": ">=5.3.3",
         "swoopaholic/components": "dev-master",
