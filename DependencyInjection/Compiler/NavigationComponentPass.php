@@ -15,7 +15,7 @@ class NavigationComponentPass implements CompilerPassInterface
         $definition = $container->getDefinition('nvs_raven.navigation.container_aware_provider');
 
         $navElements = array();
-        foreach ($container->findTaggedServiceIds('nvs_framework.navigation.element') as $id => $tags) {
+        foreach ($container->findTaggedServiceIds('swp_framework.navigation.element') as $id => $tags) {
             foreach ($tags as $attributes) {
                 if (empty($attributes['alias'])) {
                     throw new \InvalidArgumentException(sprintf('The alias is not defined in the for the service "%s"', $id));

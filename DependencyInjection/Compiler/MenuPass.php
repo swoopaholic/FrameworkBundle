@@ -8,16 +8,16 @@ class MenuPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        $definition = $container->getDefinition('nvs_framework.menu.builder');
+        $definition = $container->getDefinition('swp_framework.menu.builder');
 
         $menus = array();
-        foreach ($container->findTaggedServiceIds('nvs_framework.menu.element') as $id => $tags) {
+        foreach ($container->findTaggedServiceIds('swp_framework.menu.element') as $id => $tags) {
             foreach ($tags as $attributes) {
                 if (empty($attributes['alias'])) {
-                    throw new \InvalidArgumentException(sprintf('The alias is not defined in the "nvs_framework.menu.entry" tag for the service "%s"', $id));
+                    throw new \InvalidArgumentException(sprintf('The alias is not defined in the "swp_framework.menu.entry" tag for the service "%s"', $id));
                 }
                 if (empty($attributes['menu'])) {
-                    throw new \InvalidArgumentException(sprintf('The menu is not defined in the "nvs_framework.menu.entry" tag for the service "%s"', $id));
+                    throw new \InvalidArgumentException(sprintf('The menu is not defined in the "swp_framework.menu.entry" tag for the service "%s"', $id));
                 }
 
                 $alias = $attributes['alias'];
