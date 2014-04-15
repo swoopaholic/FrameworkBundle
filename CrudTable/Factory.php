@@ -47,6 +47,11 @@ class Factory
     private $columns;
 
     /**
+     * @var array
+     */
+    private $converters;
+
+    /**
      * The callback to retrieve the actions for the item
      * @var array|string
      */
@@ -67,6 +72,7 @@ class Factory
     {
         $this->factory = $factory;
         $this->router = $router;
+        $this->converters = array();
         $this->columns = new \ArrayIterator();
     }
 
@@ -100,6 +106,17 @@ class Factory
     public function addColumn($index, $label, $key = null)
     {
         $this->columns->append(compact('index', 'key', 'label'));
+        return $this;
+    }
+
+    /**
+     * @param $index
+     * @param $converter
+     * @return Factory
+     */
+    public function addConverter($index, ValueConverterInterface $converter)
+    {
+        $this->converters[$index] = $converter;
         return $this;
     }
 
@@ -198,7 +215,13 @@ class Factory
             return $item[$index];
         } elseif (is_object($item)) {
             $method = 'get' . ucfirst($index);
-            return $item->$method();
+            $value = $item->$method();
+            if (isset($this->converters[$index])) {
+                $converter = $this->converters[$index];
+                $value = $converter->convert($value);
+            }
+
+            return $value;
         }
 
         throw new \Exception('huh?');
