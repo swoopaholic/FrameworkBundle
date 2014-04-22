@@ -214,11 +214,22 @@ class Factory
         if (is_array($item)) {
             return $item[$index];
         } elseif (is_object($item)) {
-            $method = 'get' . ucfirst($index);
-            $value = $item->$method();
-            if (isset($this->converters[$index])) {
-                $converter = $this->converters[$index];
-                $value = $converter->convert($value);
+            if (!strpos($index, '.')) {
+                $method = 'get' . ucfirst($index);
+                $value = $item->$method();
+                if (isset($this->converters[$index])) {
+                    $converter = $this->converters[$index];
+                    $value = $converter->convert($value);
+                }
+            } else {
+                $indexes = explode('.', $index);
+                $method = 'get' . ucfirst(array_shift($indexes));
+
+                if ($item->$method() !== null) {
+                    return $this->getValue($item->$method(), join($indexes, '.'));
+                }
+
+                $value = null;
             }
 
             return $value;
