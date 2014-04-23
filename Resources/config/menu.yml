@@ -1,0 +1,15 @@
+services:
+    swp_framework.menu.builder:
+        class: Swoopaholic\Bundle\FrameworkBundle\Menu\Builder
+        arguments:
+          - "@nvs_raven.navigation.container_aware_provider"
+          - []
+
+    swp_framework.menu.main_nav:
+        class: Knp\Menu\MenuItem
+        factory_service: swp_framework.menu.builder
+        factory_method: mainNavigation
+        arguments: ["@request", "@security.context"]
+        scope: request
+        tags:
+          - { name: swp_framework.navigation.element, alias: menu_main_nav}

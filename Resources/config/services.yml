@@ -1,37 +1,3 @@
 parameters:
-  swp_framework.tables.max_per_page: 5
 
 services:
-  swp_framework.menu.builder:
-      class: Swoopaholic\Bundle\FrameworkBundle\Menu\Builder
-      arguments:
-        - "@nvs_raven.navigation.container_aware_provider"
-        - []
-
-  swp_framework.menu.main_nav:
-      class: Knp\Menu\MenuItem
-      factory_service: swp_framework.menu.builder
-      factory_method: mainNavigation
-      arguments: ["@request", "@security.context"]
-      scope: request
-      tags:
-        - { name: swp_framework.navigation.element, alias: menu_main_nav}
-
-  swp_framework.navigation.builder:
-      class: Swoopaholic\Bundle\FrameworkBundle\Navigation\Builder
-      arguments: [@nvs_raven.navigation.container_aware_provider, @nvs_raven.navigation.navigation_factory]
-
-  swp_framework.table.factory:
-      class: Swoopaholic\Component\Table\TableFactory
-
-  swp_framework.crud_table.factory:
-      class: Swoopaholic\Bundle\FrameworkBundle\CrudTable\Factory
-      arguments: [@swp_framework.table.factory, @router]
-      scope: request
-      calls:
-          - [setSortResolver, ["@swp_framework.crud_table.sort_resolver"]]
-
-  swp_framework.crud_table.sort_resolver:
-        class: Swoopaholic\Bundle\FrameworkBundle\CrudTable\SortResolver
-        arguments: [@request]
-        scope: request

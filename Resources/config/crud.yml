@@ -1,0 +1,18 @@
+parameters:
+    swp_framework.tables.max_per_page: 5
+
+services:
+    swp_framework.table.factory:
+        class: Swoopaholic\Component\Table\TableFactory
+
+    swp_framework.crud_table.factory:
+        class: Swoopaholic\Bundle\FrameworkBundle\CrudTable\Factory
+        arguments: [@swp_framework.table.factory, @router]
+        scope: request
+        calls:
+            - [setSortResolver, ["@swp_framework.crud_table.sort_resolver"]]
+
+    swp_framework.crud_table.sort_resolver:
+          class: Swoopaholic\Bundle\FrameworkBundle\CrudTable\SortResolver
+          arguments: [@request]
+          scope: request

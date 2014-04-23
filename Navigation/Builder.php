@@ -8,12 +8,25 @@ use Swoopaholic\Component\Navigation\Type\ButtonType;
 use Swoopaholic\Component\Navigation\Type\MenuType;
 use Swoopaholic\Component\Navigation\Type\NavigationType;
 
+/**
+ * Factory object, building the navigation bar
+ */
 class Builder
 {
+    /**
+     * @var \Swoopaholic\Component\Navigation\ProviderInterface
+     */
     private $provider;
 
+    /**
+     * @var \Swoopaholic\Component\Navigation\NavigationFactoryInterface
+     */
     private $factory;
 
+    /**
+     * @param ProviderInterface $provider
+     * @param NavigationFactoryInterface $factory
+     */
     public function __construct(ProviderInterface $provider, NavigationFactoryInterface $factory)
     {
         $this->provider = $provider;
@@ -23,47 +36,11 @@ class Builder
     public function buildNavBar()
     {
         $navBar = $this->factory->create('navbar', new NavigationType(), array());
-        $navBar->add($this->buildTopBar())
+        $navBar->add($this->provider->get('topbar'))
             ->add($this->buildMainSidebar())
             ->add($this->buildProfileSideBar());
 
         return $navBar;
-    }
-
-    public function buildTopBar()
-    {
-        $topBar = $this->factory->create(
-            'topbar',
-            new BarType(),
-            array(
-                'orientation' => 'top'
-            )
-        );
-
-        $topBar->add($this->factory->create(
-            'mainSidebarToggle',
-            new ButtonType(),
-            array(
-                'align' => 'left',
-                'icon' => 'menu',
-                'attr' => array(
-                    'data-togglepanelnav' => 'left'
-                )
-            )
-        ))
-        ->add($this->factory->create(
-            'profileSidebarToggle',
-                new ButtonType(),
-                array(
-                    'align' => 'right',
-                    'icon' => 'user4',
-                    'attr' => array(
-                        'data-togglepanelnav' => 'right'
-                    )
-                )
-        ));
-
-        return $topBar;
     }
 
     public function buildMainSideBar()

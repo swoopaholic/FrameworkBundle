@@ -1,0 +1,20 @@
+parameters:
+    swp_framework.navigation.topbar.builder.class: Swoopaholic\Bundle\FrameworkBundle\Navigation\TopbarBuilder
+
+services:
+    swp_framework.navigation.builder:
+        class: Swoopaholic\Bundle\FrameworkBundle\Navigation\Builder
+        arguments: [@nvs_raven.navigation.container_aware_provider, @nvs_raven.navigation.navigation_factory]
+
+    swp_framework.navigation.topbar.builder:
+        class: %swp_framework.navigation.topbar.builder.class%
+        arguments: [@nvs_raven.navigation.container_aware_provider, @nvs_raven.navigation.navigation_factory]
+
+    swp_framework.navigation.topbar:
+        class: Swoopaholic\Component\Navigation\BarType
+        factory_service: swp_framework.navigation.topbar.builder
+        factory_method: buildTopBar
+        arguments: ["@request", "@security.context"]
+        scope: request
+        tags:
+          - { name: swp_framework.navigation.element, alias: topbar}

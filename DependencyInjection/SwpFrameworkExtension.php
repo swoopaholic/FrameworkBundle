@@ -13,8 +13,11 @@ class SwpFrameworkExtension extends Extension implements PrependExtensionInterfa
     public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.yml');
+        $loader->load('navigation.yml');
+        $loader->load('menu.yml');
+        $loader->load('crud.yml');
         $loader->load('raven.yml');
+        $loader->load('services.yml');
     }
 
     /**

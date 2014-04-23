@@ -10,6 +10,8 @@ class MenuPass implements CompilerPassInterface
     {
         $definition = $container->getDefinition('swp_framework.menu.builder');
 
+        // TODO: add weight / order
+
         $menus = array();
         foreach ($container->findTaggedServiceIds('swp_framework.menu.element') as $id => $tags) {
             foreach ($tags as $attributes) {
