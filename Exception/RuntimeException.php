@@ -1,12 +1,11 @@
 <?php
 /*
- * (c) Netvlies Internetdiensten
+ * This file is part of the Swoopaholic Framework Bundle.
  *
- * author Danny Dörfel <ddorfel@netvlies.nl>
- * date: 22-9-13 11:26
+ * (c) Danny Dörfel <danny@swoopaholic.nl>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 namespace Swoopaholic\Bundle\FrameworkBundle\Exception;
 

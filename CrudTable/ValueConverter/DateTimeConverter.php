@@ -1,9 +1,8 @@
 <?php
 /*
- * (c) Netvlies Internetdiensten
+ * This file is part of the Swoopaholic Framework Bundle.
  *
- * Author Danny Dörfel <ddorfel@netvlies.nl>
- * Created: 15/04/14 13:08 PM
+ * (c) Danny Dörfel <danny@swoopaholic.nl>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.

@@ -1,15 +1,12 @@
 <?php
-
 /*
- * This file is part of the FOSUserBundle package.
+ * This file is part of the Swoopaholic Framework Bundle.
  *
- * (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
+ * (c) Danny Dörfel <danny@swoopaholic.nl>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- */
-
-namespace Swoopaholic\Bundle\FrameworkBundle\Controller;
+ */namespace Swoopaholic\Bundle\FrameworkBundle\Controller;
 
 use Swoopaholic\Bundle\FrameworkBundle\Form\Type\LoginType;
 use Symfony\Component\DependencyInjection\ContainerAware;
