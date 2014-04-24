@@ -10,6 +10,7 @@
 namespace Swoopaholic\Bundle\FrameworkBundle\Navigation;
 
 use Swoopaholic\Component\Navigation\NavigationFactoryInterface;
+use Swoopaholic\Component\Navigation\NavigationInterface;
 use Swoopaholic\Component\Navigation\ProviderInterface;
 use Swoopaholic\Component\Navigation\Type\BarType;
 use Swoopaholic\Component\Navigation\Type\ButtonType;
@@ -73,7 +74,12 @@ class TopbarBuilder
         return $topBar;
     }
 
-
+    /**
+     * @param $topBar
+     * @param $id
+     * @param $side
+     * @param $icon
+     */
     protected function addSidebarToggle($topBar, $id, $side, $icon)
     {
         $topBar->add($this->factory->create(
@@ -93,7 +99,7 @@ class TopbarBuilder
      * Adds the bar sub-elements. Extend this to add extra elements to the bar
      * @param $topBar
      */
-    protected function addBarElements($topBar)
+    protected function addBarElements(NavigationInterface $topBar)
     {
     }
 
