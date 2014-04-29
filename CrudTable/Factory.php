@@ -219,28 +219,54 @@ class Factory
         if (is_array($item)) {
             return $item[$index];
         } elseif (is_object($item)) {
-            if (!strpos($index, '.')) {
-                $method = 'get' . ucfirst($index);
-                $value = $item->$method();
-                if (isset($this->converters[$index])) {
-                    $converter = $this->converters[$index];
-                    $value = $converter->convert($value);
-                }
-            } else {
-                $indexes = explode('.', $index);
-                $method = 'get' . ucfirst(array_shift($indexes));
-
-                if ($item->$method() !== null) {
-                    return $this->getValue($item->$method(), join($indexes, '.'));
-                }
-
-                $value = null;
-            }
-
-            return $value;
+            return $this->getObjectValue($item, $index);
         }
 
         throw new \Exception('huh?');
+    }
+
+    private function getObjectValue($item, $index)
+    {
+        if (strpos($index, '.')) {
+            $indexes = explode('.', $index);
+            return $this->getObjectIterateValue($item, $indexes);
+        }
+
+        $method = 'get' . ucfirst($index);
+        $value = $item->$method();
+        if (isset($this->converters[$index])) {
+            $converter = $this->converters[$index];
+            $value = $converter->convert($value);
+        }
+
+        return $value;
+    }
+
+    private function getObjectIterateValue($item, array $indexes)
+    {
+        $property = array_shift($indexes);
+
+        $method = $this->getPropertyMethod($item, $property);
+
+        return empty($indexes)
+            ? $this->getObjectValue($item, $property)
+            : $this->getObjectIterateValue($item->$method(), $indexes);
+    }
+
+    private function getPropertyMethod($object, $property)
+    {
+        $property = ucfirst($property);
+        foreach (array('is', 'has', 'get') as $type) {
+            $method = $type . $property;
+
+            if (method_exists($object, $method)) {
+                return $method;
+            }
+        }
+
+        throw new \Exception(
+            sprintf('Object has no method is%s, has%s or get%s method', $property, $property, $property)
+        );
     }
 
     private function addItemActions($row, $item)
