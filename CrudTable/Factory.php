@@ -244,6 +244,10 @@ class Factory
 
     private function getObjectIterateValue($item, array $indexes)
     {
+        if (empty($item)) {
+            return null;
+        }
+
         $property = array_shift($indexes);
 
         $method = $this->getPropertyMethod($item, $property);
