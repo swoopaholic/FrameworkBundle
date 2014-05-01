@@ -68,8 +68,8 @@ class TopbarBuilder
         $topBar = $this->createBar();
 
         $this->addSidebarToggle($topBar, 'mainSidebarToggle', 'left', 'menu');
-        $this->addBarElements($topBar);
         $this->addSidebarToggle($topBar, 'profileSidebarToggle', 'right', 'user4');
+        $this->addBarElements($topBar);
 
         return $topBar;
     }
@@ -107,7 +107,7 @@ class TopbarBuilder
      * Creates the toplevel bar element
      * @return \Swoopaholic\Component\Navigation\NavigationInterface
      */
-    private function createBar()
+    protected function createBar()
     {
         return $this->factory->create(
             'topbar',
