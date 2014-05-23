@@ -24,6 +24,7 @@ class CrudActionType extends BaseType
             array(
                 'icon' => null,
                 'url' => null,
+                'label' => null
             )
         );
         $resolver->setAllowedValues(array());
@@ -36,6 +37,7 @@ class CrudActionType extends BaseType
 
         $view->vars['icon'] = $options['icon'];
         $view->vars['url'] = $options['url'];
+        $view->vars['label'] = $options['label'];
     }
 
     public function getName()
