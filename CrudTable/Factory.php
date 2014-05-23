@@ -279,11 +279,11 @@ class Factory
             $actions = call_user_func($this->itemActionCallback, $this->factory, $item);
 
             if (count($actions)) {
-                $itemActions = $this->factory->create($row->getName() . '_actions', new CrudCellType(), array());
+                $crudCell = $this->factory->create($row->getName() . '_actions', new CrudCellType(), array());
                 foreach ($actions as $action) {
-                    $itemActions->add($action);
+                    $crudCell->add($action);
                 }
-                $row->add($itemActions);
+                $row->add($crudCell);
             }
         }
     }
