@@ -13,3 +13,12 @@ services:
         scope: request
         tags:
           - { name: swp_framework.navigation.element, alias: menu_main_nav}
+
+    swp_framework.menu.secondary_nav:
+        class: Knp\Menu\MenuItem
+        factory_service: swp_framework.menu.builder
+        factory_method: secondaryNavigation
+        arguments: ["@request", "@security.context"]
+        scope: request
+        tags:
+          - { name: swp_framework.navigation.element, alias: menu_secondary_nav}

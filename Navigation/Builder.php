@@ -80,9 +80,19 @@ class Builder
             new BarType(),
             array(
                 'orientation' => 'right',
-                'data-class' => 'compact slide'
+                'data-class' => 'compact slide',
             )
         );
+
+        $nav = $this->provider->get('menu_secondary_nav');
+
+        $profileSideBar->add($this->factory->create(
+            'mainMenu',
+            new MenuType(),
+            array(
+                'menu' => $nav
+            )
+        ));
 
         return $profileSideBar;
     }

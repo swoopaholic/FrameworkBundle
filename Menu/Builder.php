@@ -33,6 +33,10 @@ class Builder
 
         $menuConfig = $this->getMenuConfig('menu_main_nav');
 
+        if (!$menuConfig) {
+            return $menu;
+        }
+
         foreach ($menuConfig as $alias => $id) {
             $menu->addChild($this->provider->get($alias));
         }
@@ -40,10 +44,31 @@ class Builder
         return $menu;
     }
 
+    public function secondaryNavigation(Request $request, SecurityContext $securityContext)
+    {
+        $menu = $this->factory->createItem('root');
+        $menu->setCurrentUri($request->getRequestUri());
+
+        $menuConfig = $this->getMenuConfig('menu_secondary_nav');
+
+        if (!$menuConfig) {
+            return $menu;
+        }
+
+        $children = array();
+        foreach ($menuConfig as $alias => $id) {
+            $children[] = $this->provider->get($alias);
+        }
+
+        $menu->setChildren($children);
+
+        return $menu;
+    }
+
     protected function getMenuConfig($name)
     {
         if (! isset($this->registeredMenus[$name])) {
-            throw new \InvalidArgumentException('Menu does not exist: ' . $name);
+            return false;
         }
 
         return $this->registeredMenus[$name];
