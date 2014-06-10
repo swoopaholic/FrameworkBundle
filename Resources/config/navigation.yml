@@ -1,9 +1,10 @@
 parameters:
     swp_framework.navigation.topbar.builder.class: Swoopaholic\Bundle\FrameworkBundle\Navigation\TopbarBuilder
+    swp_framework.navigation.builder.class: Swoopaholic\Bundle\FrameworkBundle\Navigation\Builder
 
 services:
     swp_framework.navigation.builder:
-        class: Swoopaholic\Bundle\FrameworkBundle\Navigation\Builder
+        class: %swp_framework.navigation.builder.class%
         arguments: [@nvs_raven.navigation.container_aware_provider, @nvs_raven.navigation.navigation_factory]
 
     swp_framework.navigation.topbar.builder:

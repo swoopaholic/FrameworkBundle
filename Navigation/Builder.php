@@ -24,12 +24,12 @@ class Builder
     /**
      * @var \Swoopaholic\Component\Navigation\ProviderInterface
      */
-    private $provider;
+    protected $provider;
 
     /**
      * @var \Swoopaholic\Component\Navigation\NavigationFactoryInterface
      */
-    private $factory;
+    protected $factory;
 
     /**
      * @param ProviderInterface $provider
