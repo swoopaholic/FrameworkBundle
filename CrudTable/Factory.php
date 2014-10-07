@@ -18,6 +18,7 @@ use Swoopaholic\Component\Table\Type\HeadType;
 use Swoopaholic\Component\Table\Type\RowType;
 use Swoopaholic\Component\Table\Type\TableType;
 use Swoopaholic\Bundle\FrameworkBundle\CrudTable\Type\CrudActionType;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -232,8 +233,8 @@ class Factory
             return $this->getObjectIterateValue($item, $indexes);
         }
 
-        $method = 'get' . ucfirst($index);
-        $value = $item->$method();
+        $accessor = PropertyAccess::createPropertyAccessor();
+        $value = $accessor->getValue($item, $index);
         if (isset($this->converters[$index])) {
             $converter = $this->converters[$index];
             $value = $converter->convert($value);
