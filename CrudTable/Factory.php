@@ -232,8 +232,7 @@ class Factory
             return $this->getObjectIterateValue($item, $indexes);
         }
 
-        $method = 'get' . ucfirst($index);
-        $value = $item->$method();
+        $value = $this->getPropertyMethod($item, $index);
         if (isset($this->converters[$index])) {
             $converter = $this->converters[$index];
             $value = $converter->convert($value);
