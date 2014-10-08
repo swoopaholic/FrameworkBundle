@@ -32,6 +32,10 @@ class DateTimeConverter implements ValueConverterInterface
 
     public function convert($value)
     {
+        if (is_null($value)) {
+            return null;
+        }
+        
         if (! $value instanceof \DateTime) {
             throw new \InvalidArgumentException('DateTimeConverter only accepts DateTime objects');
         }
