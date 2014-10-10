@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "swoopaholic/components": "dev-master",
+        "swoopaholic/components": "0.1.*@dev",
         "swoopaholic/pagerfanta-bridge": "dev-master"
     },
     "autoload": {
