@@ -43,7 +43,7 @@ class Factory
     private $route;
 
     /**
-     * @var \Swoopaholic\Component\Table\SortResolverInterface
+     * @var \Swoopaholic\Bundle\FrameworkBundle\CrudTable\SortResolverInterface
      */
     private $sortResolver;
 
@@ -149,10 +149,10 @@ class Factory
     /**
      * @return \Swoopaholic\Component\Table\Table
      */
-    public function createTable()
+    public function createTable($routeParams = array())
     {
         $table = $this->factory->create('table', new TableType(), array('hover' => true));
-        $table->add($this->createTableHeader());
+        $table->add($this->createTableHeader($routeParams));
         $table->add($this->createTableBody());
 
         return $table;
@@ -161,7 +161,7 @@ class Factory
     /**
      * @return \Swoopaholic\Component\Table\Table
      */
-    public function createTableHeader()
+    public function createTableHeader($routeParams = array())
     {
         $head = $this->factory->create('head', new HeadType(), array());
 
@@ -172,7 +172,7 @@ class Factory
             $params = array('label' => $label);
 
             if ($key) {
-                $params['sortLink'] = $this->getSortLink($this->sortResolver->getSortParams($key));
+                $params['sortLink'] = $this->getSortLink($this->sortResolver->getSortParams($key), $routeParams);
                 $params['sortDir'] = $this->sortResolver->getSortDir($key);
                 $params['active'] = $this->sortResolver->isSort($key);
             }
@@ -295,8 +295,9 @@ class Factory
      * @param $params
      * @return mixed
      */
-    private function getSortLink($params)
+    private function getSortLink($sortParams, $routeParams)
     {
-        return $this->router->generate($this->route, $params);
+        $allParams = array_merge($routeParams, $sortParams);
+        return $this->router->generate($this->route, $allParams);
     }
 }
